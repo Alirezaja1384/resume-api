@@ -1,0 +1,105 @@
+# Created by https://www.toptal.com/developers/gitignore/api/django,vscode,python
+# Edit at https://www.toptal.com/developers/gitignore?templates=django,vscode,python
+
+### Django.Python Stack ###
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+pytestdebug.log
+
+# Translations
+*.mo
+
+# Environments
+# .env
+.env/
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pythonenv*
+
+# mkdocs documentation
+/site
+
+# operating system-related files
+*.DS_Store #file properties cache/storage on macOS
+Thumbs.db #thumbnail cache on Windows
+
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+**/media/*
+!**/media/default/
+
+### vscode ###
+.vscode/
+*.code-workspace
+
+# End of https://www.toptal.com/developers/gitignore/api/python,django,vscode,pycharm
+
+# Env files
+*.env
+
+#  Log files
+*.log 
+
+# mypy
+.mypy_cache/
+
+# Database diagram file
+diagram.png
+
+# script configs
+scripts/*.configs.json
+
+# collected static files 
+staticfiles
