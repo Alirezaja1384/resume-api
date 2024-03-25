@@ -24,9 +24,18 @@ from drf_spectacular.views import (
 
 app_name = "core"
 
+
 v1_routes = include(
     (
         [
+            path(
+                "admin/",
+                include(
+                    [
+                        path("resume/", include("resume.admin.v1.urls")),
+                    ]
+                ),
+            ),
             path("resume/", include("resume.v1.urls")),
             path("auth/", include("authentication.v1.urls")),
         ],
@@ -35,13 +44,6 @@ v1_routes = include(
     namespace="v1",
 )
 
-admin_v1_routes = include(
-    (
-        [path("resume/", include("resume.admin.v1.urls"))],
-        "admin_v1",
-    ),
-    namespace="v1",
-)
 
 schema_routes = include(
     [
@@ -61,6 +63,5 @@ schema_routes = include(
 
 urlpatterns = [
     path("v1/", v1_routes),
-    path("admin/v1/", admin_v1_routes),
     path("schema/", schema_routes),
 ]
