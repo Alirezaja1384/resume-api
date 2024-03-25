@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 from typing import cast
 from decouple import config
@@ -150,11 +151,13 @@ CORS_ALLOWED_ORIGINS = cast(
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly",
+        "rest_framework.permissions.DjangoModelPermissions",
     ),
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 20,
 }
 
 # drf-spectacular settings
@@ -173,6 +176,19 @@ SPECTACULAR_SETTINGS = {
 
 # djangorestframework-simplejwt settings
 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/
+SIMPLE_JWT = {
+    "SIGNING_KEY": config("SIGNING_KEY", default=SECRET_KEY),
+    "ACCESS_TOKEN_LIFETIME": timedelta(
+        minutes=config(
+            "ACCESS_TOKEN_LIFETIME_MINUTES", cast=int, default=24 * 60
+        )
+    ),
+    "REFRESH_TOKEN_LIFETIME": timedelta(
+        minutes=config(
+            "REFRESH_TOKEN_LIFETIME_MINUTES", cast=int, default=30 * 24 * 60
+        )
+    ),
+}
 
 
 # Logging configuration
@@ -209,3 +225,52 @@ LOGGING = {
         },
     },
 }
+
+
+# django-bleach settings
+# https://django-bleach.readthedocs.io/en/latest/settings.html
+
+BLEACH_ALLOWED_PROTOCOLS = ["http", "https"]
+# Strip unknown tags if True, replace with HTML escaped characters if False
+BLEACH_STRIP_TAGS = True
+# Strip HTML comments, or leave them in.
+BLEACH_STRIP_COMMENTS = False
+
+BLEACH_ALLOWED_ATTRIBUTES = ["href", "style", "src"]
+BLEACH_ALLOWED_TAGS = [
+    "p",
+    "b",
+    "i",
+    "u",
+    "em",
+    "strong",
+    "a",
+    "img",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "span",
+    "sup",
+    "sub",
+    "code",
+    "table",
+    "tbody",
+    "tr",
+    "th",
+    "td",
+]
+
+BLEACH_ALLOWED_STYLES = [
+    "font-family",
+    "font-weight",
+    "font-size",
+    "font-variant",
+    "text-decoration",
+    "color",
+    "background-color",
+    "direction",
+    "text-align",
+]
