@@ -1,7 +1,3 @@
-def to_list(txt: str):
-    return [item.strip() for item in txt.split(",")]
-
-
 def file_or_text(inp: str) -> str:
     # Example: "some string"
     if not inp.startswith("file:"):

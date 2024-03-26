@@ -13,9 +13,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 from typing import cast
-from decouple import config
+from decouple import config, Csv
 from dj_database_url import parse as parse_conn_str
-from .utils import to_list, file_or_text
+
+from shared.settings import file_or_text
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +31,7 @@ SECRET_KEY = cast(str, config("SECRET_KEY", cast=file_or_text))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = cast(bool, config("DEBUG", cast=bool))
 
-ALLOWED_HOSTS = cast(list[str], config("ALLOWED_HOSTS", cast=to_list))
+ALLOWED_HOSTS = cast(list[str], config("ALLOWED_HOSTS", cast=Csv()))
 
 
 # Application definition
@@ -143,7 +144,7 @@ AUTH_USER_MODEL = "authentication.User"
 # django-cors-headers settings
 # https://pypi.org/project/django-cors-headers/
 CORS_ALLOWED_ORIGINS = cast(
-    list[str], config("CORS_ALLOWED_ORIGINS", cast=to_list)
+    list[str], config("CORS_ALLOWED_ORIGINS", cast=Csv())
 )
 
 # django-rest-framework settings
@@ -156,7 +157,9 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "DEFAULT_PAGINATION_CLASS": (
+        "rest_framework.pagination.PageNumberPagination"
+    ),
     "PAGE_SIZE": 20,
 }
 
@@ -274,3 +277,7 @@ BLEACH_ALLOWED_STYLES = [
     "direction",
     "text-align",
 ]
+
+# Configure HTTPS
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

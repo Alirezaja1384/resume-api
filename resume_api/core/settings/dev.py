@@ -1,12 +1,13 @@
 import logging
 from importlib import import_module
-from .base import INSTALLED_APPS
+
+from . import base
 
 logger = logging.getLogger(__name__)
 
-DEV_APPS: list[str] = [
-    "django_extensions",
-]
+INSTALLED_APPS = [*base.INSTALLED_APPS]
+DEV_APPS: list[str] = ["django_extensions"]
+
 
 for app in DEV_APPS:
     try:

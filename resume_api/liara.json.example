@@ -1,0 +1,9 @@
+{
+    "platform": "django",
+    "django": {
+        "timezone": "UTC",
+        "pythonVersion": "3.11",
+        "collectStatic": false,
+        "modifySettings": false
+    }
+}

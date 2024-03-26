@@ -66,8 +66,7 @@ pythonenv*
 
 # operating system-related files
 *.DS_Store #file properties cache/storage on macOS
-Thumbs.db #thumbnail cache on Windows
-
+Thumbs.db  #thumbnail cache on Windows
 
 ### Django ###
 *.log
@@ -90,7 +89,7 @@ db.sqlite3-journal
 *.env
 
 #  Log files
-*.log 
+*.log
 
 # mypy
 .mypy_cache/
@@ -101,5 +100,9 @@ diagram.png
 # script configs
 scripts/*.configs.json
 
-# collected static files 
+# collected static files
 staticfiles
+
+# Deployment files
+liara.json
+requirements.txt
