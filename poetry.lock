@@ -2,13 +2,13 @@
 
 [[package]]
 name = "asgiref"
-version = "3.8.0"
+version = "3.8.1"
 description = "ASGI specs, helper code, and adapters"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "asgiref-3.8.0-py3-none-any.whl", hash = "sha256:30fc07797ad71a0abb8fe34aa03c8043308a8389abc7942d797ea9911540bc28"},
-    {file = "asgiref-3.8.0.tar.gz", hash = "sha256:ec75d9d0f04e2dbfedef1f20ee73a6594af80c333df47cdd31f37e6701f7c53a"},
+    {file = "asgiref-3.8.1-py3-none-any.whl", hash = "sha256:3e1e3ecc849832fe52ccf2cb6686b7a55f82bb1d6aee72a58826471390335e47"},
+    {file = "asgiref-3.8.1.tar.gz", hash = "sha256:c343bd80a0bec947a9860adb4c432ffa7db769836c64238fc34bdc3fec84d590"},
 ]
 
 [package.extras]
@@ -134,20 +134,6 @@ files = [
 
 [package.dependencies]
 pycparser = "*"
-
-[[package]]
-name = "click"
-version = "8.1.7"
-description = "Composable command line interface toolkit"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "click-8.1.7-py3-none-any.whl", hash = "sha256:ae74fb96c20a0277a1d615f1e4d73c8414f5a98db8b799a7931d1582f3390c28"},
-    {file = "click-8.1.7.tar.gz", hash = "sha256:ca9853ad459e787e2192211578cc907e7594e294c7ccc834310722b41b9ca6de"},
-]
-
-[package.dependencies]
-colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
 [[package]]
 name = "colorama"
@@ -306,13 +292,13 @@ Django = ">=3.2"
 
 [[package]]
 name = "djangorestframework"
-version = "3.15.0"
+version = "3.15.1"
 description = "Web APIs for Django, made easy."
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "djangorestframework-3.15.0-py3-none-any.whl", hash = "sha256:5fa616048a7ec287fdaab3148aa5151efb73f7f8be1e23a9d18484e61e672695"},
-    {file = "djangorestframework-3.15.0.tar.gz", hash = "sha256:3f4a263012e1b263bf49a4907eb4cfe14de840a09b1ba64596d01a9c54835919"},
+    {file = "djangorestframework-3.15.1-py3-none-any.whl", hash = "sha256:3ccc0475bce968608cf30d07fb17d8e52d1d7fc8bfe779c905463200750cbca6"},
+    {file = "djangorestframework-3.15.1.tar.gz", hash = "sha256:f88fad74183dfc7144b2756d0d2ac716ea5b4c7c9840995ac3bfd8ec034333c1"},
 ]
 
 [package.dependencies]
@@ -399,17 +385,6 @@ eventlet = ["eventlet (>=0.24.1)"]
 gevent = ["gevent (>=1.4.0)"]
 setproctitle = ["setproctitle"]
 tornado = ["tornado (>=0.2)"]
-
-[[package]]
-name = "h11"
-version = "0.14.0"
-description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "h11-0.14.0-py3-none-any.whl", hash = "sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761"},
-    {file = "h11-0.14.0.tar.gz", hash = "sha256:8f19fbbe99e72420ff35c00b27a34cb9937e902a8b810e2c88300c6f0a3b699d"},
-]
 
 [[package]]
 name = "inflection"
@@ -1136,24 +1111,6 @@ files = [
 ]
 
 [[package]]
-name = "uvicorn"
-version = "0.29.0"
-description = "The lightning-fast ASGI server."
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "uvicorn-0.29.0-py3-none-any.whl", hash = "sha256:2c2aac7ff4f4365c206fd773a39bf4ebd1047c238f8b8268ad996829323473de"},
-    {file = "uvicorn-0.29.0.tar.gz", hash = "sha256:6a69214c0b6a087462412670b3ef21224fa48cae0e452b5883e8e8bdfdd11dd0"},
-]
-
-[package.dependencies]
-click = ">=7.0"
-h11 = ">=0.8"
-
-[package.extras]
-standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)", "pyyaml (>=5.1)", "uvloop (>=0.14.0,!=0.15.0,!=0.15.1)", "watchfiles (>=0.13)", "websockets (>=10.4)"]
-
-[[package]]
 name = "wcwidth"
 version = "0.2.13"
 description = "Measures the displayed width of unicode strings in a terminal"
@@ -1195,4 +1152,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "99acb53850f4c0a37915b07f47d0866e561b400ecd82d4494666e1d6c40c4c58"
+content-hash = "f8f4ddfbf14b54317870a03b8926a61efe06a4770a97b549d285b93e3e577799"
