@@ -24,6 +24,7 @@ psycopg = {extras = ["binary"], version = "^3.1.18"}
 ipython = "^8.22.2"
 werkzeug = "^3.0.1"
 django-extensions = "^3.2.3"
+black = "^24.3.0"
 
 [build-system]
 requires = ["poetry-core"]
