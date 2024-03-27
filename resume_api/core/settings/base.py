@@ -37,18 +37,27 @@ ALLOWED_HOSTS = cast(list[str], config("ALLOWED_HOSTS", cast=Csv()))
 # Application definition
 
 INSTALLED_APPS = [
+    # <Django apps>
     # "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     # "django.contrib.sessions",
     # "django.contrib.messages",
     "django.contrib.staticfiles",
+    # </Django apps>
+
+    # <Project apps>
     "authentication.apps.AuthenticationConfig",
     "resume.apps.ResumeConfig",
+    "shared.apps.SharedConfig",
+    # </Project apps>
+
+    # <Third-party apps>
     "rest_framework",
     "drf_spectacular",
     "corsheaders",
     "rest_framework_simplejwt",
+    # </Third-party apps>
 ]
 
 MIDDLEWARE = [
