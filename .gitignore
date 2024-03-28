@@ -220,7 +220,3 @@ scripts/*.configs.json
 
 # collected static files
 staticfiles
-
-# Deployment files
-liara.json
-requirements.txt
