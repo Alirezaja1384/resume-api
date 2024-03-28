@@ -1,11 +1,10 @@
-from rest_framework.serializers import ModelSerializer, Serializer
+from rest_framework.serializers import ModelSerializer
 
-from authentication.v1.schemas import UserSerializer
+from authentication.v1.schemas import UserSerializer, ContactInfoSerializer
 from resume.models import Profile
 from resume.models import Project, WorkExperience
 from shared.schemas import OwnedPrimaryKeyRelatedField
 
-from .contact_info import AdminContactInfoSerializer
 from .skill import AdminSkillSerializer
 from .interest import AdminInterestSerializer
 from .project import AdminProjectSerializer
@@ -15,7 +14,7 @@ from .work_experience import AdminWorkExperienceSerializer
 class AdminProfileSerializer(ModelSerializer):
     user = UserSerializer()
 
-    contact_info = AdminContactInfoSerializer(many=True)
+    contact_info = ContactInfoSerializer(many=True)
 
     skills = AdminSkillSerializer(many=True)
 
@@ -41,22 +40,22 @@ class AdminProfileSerializer(ModelSerializer):
         model = Profile
         fields = (
             "id",
-            # <Backward compatibility>
-            "full_name",
-            "image_url",
-            "birth_date",
-            # </Backward compatibility>
             "user",
             "introduction",
             "about_me",
             "job_title",
             "employment_status",
-            "contact_info",
             "skills",
             "interests",
             "project_ids",
             "work_experience_ids",
             "is_default",
+            # <Backward compatibility>
+            "full_name",
+            "image_url",
+            "birth_date",
+            "contact_info",
+            # </Backward compatibility>
         )
 
         read_only_fields = ("id",)

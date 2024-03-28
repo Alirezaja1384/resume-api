@@ -6,13 +6,14 @@ from django.contrib.auth import get_user_model
 from django_bleach.models import BleachField
 
 from shared.models import BaseModel, max_choice_len
+
 from .project import Project
 from .work_experience import WorkExperience
 
 if TYPE_CHECKING:
-    from .contact_info import ContactInfoDict
     from .skill import SkillDict
     from .interest import InterestDict
+    from authentication.models.contact_info import ContactInfoDict
 
 UserModel = get_user_model()
 
@@ -42,10 +43,6 @@ class Profile(BaseModel):
     employment_status = models.CharField(
         max_length=max_choice_len(EmploymentStatusChoices),
         choices=EmploymentStatusChoices,
-    )
-
-    contact_info: list["ContactInfoDict"] = cast(
-        list["ContactInfoDict"], models.JSONField(default=list)
     )
 
     skills: list["SkillDict"] = cast(list["SkillDict"], models.JSONField(default=list))
@@ -100,5 +97,9 @@ class Profile(BaseModel):
     @property
     def birth_date(self) -> date:
         return self.user.birth_date or date(year=2000, month=1, day=1)
+
+    @property
+    def contact_info(self) -> "ContactInfoDict":
+        return self.user.contact_info
 
     # </Backward compatibility>
