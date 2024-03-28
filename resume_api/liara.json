@@ -1,7 +1,6 @@
 {
     "platform": "django",
     "django": {
-        "mirror": false,
         "timezone": "UTC",
         "pythonVersion": "3.11",
         "collectStatic": false,
