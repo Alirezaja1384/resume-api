@@ -21,3 +21,5 @@ class WorkExperience(BaseModel):
     tags = TagsField()
 
     links = cast(list["LinkDict"], models.JSONField(default=list))
+
+    user = models.ForeignKey("authentication.User", on_delete=models.CASCADE)

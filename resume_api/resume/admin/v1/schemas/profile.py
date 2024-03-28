@@ -1,11 +1,9 @@
-from rest_framework.serializers import (
-    ModelSerializer,
-    PrimaryKeyRelatedField,
-    Serializer,
-)
+from rest_framework.serializers import ModelSerializer, Serializer
 
+from authentication.v1.schemas import UserSerializer
 from resume.models import Profile
 from resume.models import Project, WorkExperience
+from shared.schemas import OwnedPrimaryKeyRelatedField
 
 from .contact_info import AdminContactInfoSerializer
 from .skill import AdminSkillSerializer
@@ -15,35 +13,43 @@ from .work_experience import AdminWorkExperienceSerializer
 
 
 class AdminProfileSerializer(ModelSerializer):
+    user = UserSerializer()
+
     contact_info = AdminContactInfoSerializer(many=True)
 
     skills = AdminSkillSerializer(many=True)
 
     interests = AdminInterestSerializer(many=True)
 
-    project_ids = PrimaryKeyRelatedField(
+    project_ids = OwnedPrimaryKeyRelatedField(
         source="projects",
         many=True,
         write_only=True,
         queryset=Project.objects.all(),
+        owner_field="user",
     )
 
-    work_experience_ids = PrimaryKeyRelatedField(
+    work_experience_ids = OwnedPrimaryKeyRelatedField(
         source="work_experiences",
         many=True,
         write_only=True,
         queryset=WorkExperience.objects.all(),
+        owner_field="user",
     )
 
     class Meta:
         model = Profile
         fields = (
             "id",
+            # <Backward compatibility>
             "full_name",
-            "about_me",
-            "job_title",
             "image_url",
             "birth_date",
+            # </Backward compatibility>
+            "user",
+            "introduction",
+            "about_me",
+            "job_title",
             "employment_status",
             "contact_info",
             "skills",
@@ -65,7 +71,3 @@ class AdminDetailedProfileSerializer(AdminProfileSerializer):
             "projects",
             "work_experiences",
         )
-
-
-class AdminSetDefaultProfileActionBody(Serializer):
-    id = PrimaryKeyRelatedField(queryset=Profile.objects.all())

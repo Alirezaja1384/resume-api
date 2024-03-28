@@ -1,9 +1,11 @@
+from datetime import date
 from typing import TYPE_CHECKING, cast
 
 from django.db import models, transaction
+from django.contrib.auth import get_user_model
 from django_bleach.models import BleachField
 
-from shared.models import BaseModel, max_choice_len
+from resume_api.shared.models import BaseModel, max_choice_len
 from .project import Project
 from .work_experience import WorkExperience
 
@@ -11,6 +13,8 @@ if TYPE_CHECKING:
     from .contact_info import ContactInfoDict
     from .skill import SkillDict
     from .interest import InterestDict
+
+UserModel = get_user_model()
 
 
 class ProfileManager(models.Manager):
@@ -29,16 +33,11 @@ class EmploymentStatusChoices(models.TextChoices):
 
 
 class Profile(BaseModel):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    introduction = models.CharField(max_length=255, null=True)
 
     about_me = BleachField()
 
     job_title = models.CharField(max_length=255)
-
-    image_url = models.URLField(null=True, blank=True)
-
-    birth_date = models.DateField()
 
     employment_status = models.CharField(
         max_length=max_choice_len(EmploymentStatusChoices),
@@ -55,6 +54,10 @@ class Profile(BaseModel):
 
     interests: list["InterestDict"] = cast(
         list["InterestDict"], models.JSONField(default=list)
+    )
+
+    user = models.ForeignKey(
+        UserModel, on_delete=models.CASCADE, related_name="Profiles"
     )
 
     projects = models.ManyToManyField(Project, related_name="profiles")
@@ -76,15 +79,12 @@ class Profile(BaseModel):
             )
         ]
 
-    def full_name(self) -> str:
-        return f"{self.first_name.strip()} {self.last_name.strip()}"
-
     def save(
-        self,
-        force_insert=False,
-        force_update=False,
-        using=None,
-        update_fields=None,
+            self,
+            force_insert=False,
+            force_update=False,
+            using=None,
+            update_fields=None,
     ) -> None:
         with transaction.atomic():
             if self.is_default:
@@ -93,3 +93,18 @@ class Profile(BaseModel):
                 )
 
             super().save(force_insert, force_update, using, update_fields)
+
+    # <Backward compatibility>
+    @property
+    def full_name(self) -> str:
+        return self.user.full_name
+
+    @property
+    def image_url(self) -> str | None:
+        return self.user.profile_image
+
+    @property
+    def birth_date(self) -> date:
+        return self.user.birth_date or date(year=2000, month=1, day=1)
+
+    # </Backward compatibility>

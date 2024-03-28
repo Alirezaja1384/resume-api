@@ -9,3 +9,9 @@ class ProjectModelViewSet(ModelViewSet):
     permission_classes = [DjangoModelPermissions]
     serializer_class = schemas.AdminProjectSerializer
     queryset = Project.objects.all()
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
