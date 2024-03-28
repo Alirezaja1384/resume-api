@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "resume-api"
-version = "1.0.1"
+version = "2.0.0"
 description = ""
 authors = ["Alireza Jafari <alirezaja1384@gmail.com>"]
 readme = "README.md"
@@ -11,13 +11,13 @@ django = "^5.0.3"
 djangorestframework = "^3.15.0"
 markdown = "^3.6"
 django-bleach = "^3.1.0"
-djangorestframework-simplejwt = {extras = ["crypto"], version = "^5.3.1"}
+djangorestframework-simplejwt = { extras = ["crypto"], version = "^5.3.1" }
 django-cors-headers = "^4.3.1"
 drf-spectacular = "^0.27.1"
 dj-database-url = "^2.1.0"
 gunicorn = "^21.2.0"
 python-decouple = "^3.8"
-psycopg = {extras = ["binary"], version = "^3.1.18"}
+psycopg = { extras = ["binary"], version = "^3.1.18" }
 
 
 [tool.poetry.group.dev.dependencies]
