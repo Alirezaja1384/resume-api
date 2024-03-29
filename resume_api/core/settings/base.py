@@ -16,22 +16,31 @@ from typing import cast
 from decouple import config, Csv
 from dj_database_url import parse as parse_conn_str
 
-from shared.settings import file_or_text
+from shared.settings import file_or_text, random_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = cast(str, config("SECRET_KEY", cast=file_or_text))
+SECRET_KEY = cast(
+    str, config("SECRET_KEY", cast=file_or_text, default=random_secret_key())
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = cast(bool, config("DEBUG", cast=bool))
+DEBUG = cast(bool, config("DEBUG", cast=bool, default=False))
 
-ALLOWED_HOSTS = cast(list[str], config("ALLOWED_HOSTS", cast=Csv()))
+ALLOWED_HOSTS = cast(
+    list[str],
+    config(
+        "ALLOWED_HOSTS",
+        cast=Csv(),
+        default="127.0.0.1, localhost",
+    ),
+)
 
 
 # Application definition
@@ -45,13 +54,11 @@ INSTALLED_APPS = [
     # "django.contrib.messages",
     "django.contrib.staticfiles",
     # </Django apps>
-
     # <Project apps>
     "authentication.apps.AuthenticationConfig",
     "resume.apps.ResumeConfig",
     "shared.apps.SharedConfig",
     # </Project apps>
-
     # <Third-party apps>
     "rest_framework",
     "drf_spectacular",
@@ -95,16 +102,17 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+DATABASES = {}
 
-DATABASES = {
-    "default": parse_conn_str(
-        cast(str, config("DATABASE_URL")),
+if db_url := cast(str | None, config("DATABASE_URL", default=None)):
+    DATABASES["default"] = parse_conn_str(
+        db_url,
         conn_max_age=cast(
-            int, config("DATABASE_CONN_MAX_AGE", cast=int, default=600)
+            int,
+            config("DATABASE_CONN_MAX_AGE", cast=int, default=600),
         ),
         conn_health_checks=True,
     )
-}
 
 
 # Password validation
@@ -153,7 +161,7 @@ AUTH_USER_MODEL = "authentication.User"
 # django-cors-headers settings
 # https://pypi.org/project/django-cors-headers/
 CORS_ALLOWED_ORIGINS = cast(
-    list[str], config("CORS_ALLOWED_ORIGINS", cast=Csv())
+    list[str], config("CORS_ALLOWED_ORIGINS", cast=Csv(), default="")
 )
 
 # django-rest-framework settings
@@ -166,9 +174,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    "DEFAULT_PAGINATION_CLASS": (
-        "rest_framework.pagination.PageNumberPagination"
-    ),
+    "DEFAULT_PAGINATION_CLASS": ("rest_framework.pagination.PageNumberPagination"),
     "PAGE_SIZE": 20,
 }
 
@@ -192,12 +198,16 @@ SIMPLE_JWT = {
     "SIGNING_KEY": config("SIGNING_KEY", default=SECRET_KEY),
     "ACCESS_TOKEN_LIFETIME": timedelta(
         minutes=config(
-            "ACCESS_TOKEN_LIFETIME_MINUTES", cast=int, default=24 * 60
+            "ACCESS_TOKEN_LIFETIME_MINUTES",
+            cast=int,
+            default=24 * 60,
         )
     ),
     "REFRESH_TOKEN_LIFETIME": timedelta(
         minutes=config(
-            "REFRESH_TOKEN_LIFETIME_MINUTES", cast=int, default=30 * 24 * 60
+            "REFRESH_TOKEN_LIFETIME_MINUTES",
+            cast=int,
+            default=30 * 24 * 60,
         )
     ),
 }
