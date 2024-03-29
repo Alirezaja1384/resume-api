@@ -1,5 +1,3 @@
-from Tools.scripts.combinerefs import read
-
 from rest_framework.serializers import ModelSerializer
 
 from authentication.v1.schemas import UserSerializer, ContactInfoSerializer
