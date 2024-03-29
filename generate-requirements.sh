@@ -3,7 +3,7 @@ set -e
 
 BASE_DIR="$(dirname "$0")"
 
-echo "> Syncing requirements.txt ..."
+echo "> Generating requirements.txt ..."
 # Generate requirements.txt (windows-specific packages are excluded)
 poetry -C "$BASE_DIR" export --format requirements.txt --only main |
     grep -v -i win \
