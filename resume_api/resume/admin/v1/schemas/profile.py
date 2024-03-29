@@ -1,3 +1,5 @@
+from Tools.scripts.combinerefs import read
+
 from rest_framework.serializers import ModelSerializer
 
 from authentication.v1.schemas import UserSerializer, ContactInfoSerializer
@@ -14,7 +16,9 @@ from .work_experience import AdminWorkExperienceSerializer
 class AdminProfileSerializer(ModelSerializer):
     user = UserSerializer(read_only=True)
 
-    contact_info = ContactInfoSerializer(many=True)
+    contact_info = ContactInfoSerializer(
+        many=True, read_only=True
+    )  # Backward compatibility
 
     skills = AdminSkillSerializer(many=True)
 
