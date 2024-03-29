@@ -12,13 +12,40 @@ from .work_experience import AdminWorkExperienceSerializer
 
 
 class AdminProfileSerializer(ModelSerializer):
-    user = UserSerializer()
+    user = UserSerializer(read_only=True)
 
     contact_info = ContactInfoSerializer(many=True)
 
     skills = AdminSkillSerializer(many=True)
 
     interests = AdminInterestSerializer(many=True)
+
+    class Meta:
+        model = Profile
+        fields = (
+            "id",
+            "user",
+            "introduction",
+            "about_me",
+            "job_title",
+            "employment_status",
+            "skills",
+            "interests",
+            "is_default",
+            # <Backward compatibility>
+            "full_name",
+            "image_url",
+            "birth_date",
+            "contact_info",
+            # </Backward compatibility>
+        )
+
+        read_only_fields = ("id",)
+
+
+class AdminDetailedProfileSerializer(AdminProfileSerializer):
+    projects = AdminProjectSerializer(many=True, read_only=True)
+    work_experiences = AdminWorkExperienceSerializer(many=True, read_only=True)
 
     project_ids = OwnedPrimaryKeyRelatedField(
         source="projects",
@@ -36,37 +63,10 @@ class AdminProfileSerializer(ModelSerializer):
         owner_field="user",
     )
 
-    class Meta:
-        model = Profile
-        fields = (
-            "id",
-            "user",
-            "introduction",
-            "about_me",
-            "job_title",
-            "employment_status",
-            "skills",
-            "interests",
-            "project_ids",
-            "work_experience_ids",
-            "is_default",
-            # <Backward compatibility>
-            "full_name",
-            "image_url",
-            "birth_date",
-            "contact_info",
-            # </Backward compatibility>
-        )
-
-        read_only_fields = ("id",)
-
-
-class AdminDetailedProfileSerializer(AdminProfileSerializer):
-    projects = AdminProjectSerializer(many=True, read_only=True)
-    work_experiences = AdminWorkExperienceSerializer(many=True, read_only=True)
-
     class Meta(AdminProfileSerializer.Meta):
         fields = AdminProfileSerializer.Meta.fields + (
             "projects",
             "work_experiences",
+            "project_ids",
+            "work_experience_ids",
         )

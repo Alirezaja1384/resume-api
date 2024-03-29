@@ -3,18 +3,20 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import DjangoModelPermissions
 
-from resume.models import Profile
+from resume.models import CoverLetter
 from resume.admin.v1 import schemas
 
 
-class ProfileViewSet(ModelViewSet):
+class CoverLetterViewSet(ModelViewSet):
     permission_classes = [DjangoModelPermissions]
-    serializer_class = schemas.AdminProfileSerializer
-    detailed_serializer_class = schemas.AdminDetailedProfileSerializer
-    queryset = Profile.objects.all().select_related("user")
+    serializer_class = schemas.AdminCoverLetterSerializer
+    detailed_serializer_class = schemas.AdminDetailedCoverLetterSerializer
+    queryset = CoverLetter.objects.all().select_related("user")
 
     def get_queryset(self):
-        qs: QuerySet[Profile] = super().get_queryset().filter(user=self.request.user)
+        qs: QuerySet[CoverLetter] = (
+            super().get_queryset().filter(user=self.request.user)
+        )
         if self.action != "list":
             qs = qs.prefetch_related("projects", "work_experiences")
 
@@ -29,8 +31,8 @@ class ProfileViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-    def perform_destroy(self, instance: Profile):
+    def perform_destroy(self, instance: CoverLetter):
         if instance.is_default:
-            raise PermissionDenied("Cannot delete default profile")
+            raise PermissionDenied("Cannot delete default CoverLetter")
 
         return super().perform_destroy(instance)

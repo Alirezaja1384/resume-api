@@ -5,7 +5,7 @@ from resume.models import WorkExperience
 from resume.admin.v1 import schemas
 
 
-class WorkExperienceModelViewSet(ModelViewSet):
+class WorkExperienceViewSet(ModelViewSet):
     permission_classes = [DjangoModelPermissions]
     serializer_class = schemas.AdminWorkExperienceSerializer
     queryset = WorkExperience.objects.all()

@@ -1,4 +1,5 @@
 from .profile import AdminProfileSerializer, AdminDetailedProfileSerializer
+from .cover_letter import AdminCoverLetterSerializer, AdminDetailedCoverLetterSerializer
 from .project import AdminProjectSerializer
 from .work_experience import AdminWorkExperienceSerializer
 
