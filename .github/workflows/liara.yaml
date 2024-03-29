@@ -36,7 +36,7 @@ jobs:
             - name: Install @liara/cli
               run: npm i -g @liara/cli@5
 
-            - name: Generate requuirements.txt
+            - name: Generate requirements.txt
               run: bash ./generate-requirements.sh
 
             - name: Deploy
