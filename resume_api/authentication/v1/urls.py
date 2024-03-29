@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
 
 from .routess import MeViewSet
 
-app_name = "auth_v1"
+app_name = "auth"
 urlpatterns = [
     path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),

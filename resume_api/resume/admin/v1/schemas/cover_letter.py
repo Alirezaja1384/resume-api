@@ -1,4 +1,6 @@
+from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
+from rest_framework.reverse import reverse
 
 from authentication.v1.schemas import UserSerializer
 from resume.models import CoverLetter, Project, WorkExperience
@@ -10,9 +12,18 @@ from .work_experience import AdminWorkExperienceSerializer
 class AdminCoverLetterSerializer(ModelSerializer):
     user = UserSerializer(read_only=True)
 
+    public_url = SerializerMethodField(method_name="get_public_url")
+
     class Meta:
         model = CoverLetter
-        fields = ("user", "introduction", "text")
+        fields = ("id", "user", "introduction", "text", "public_url")
+
+    def get_public_url(self, obj) -> str:
+        return reverse(
+            "v1:resume:cover-letter-detail",
+            request=self.context["request"],
+            args=[obj.id],
+        )
 
 
 class AdminDetailedCoverLetterSerializer(AdminCoverLetterSerializer):
