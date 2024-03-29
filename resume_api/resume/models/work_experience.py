@@ -18,7 +18,7 @@ class WorkExperience(BaseModel):
     start_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)
 
-    tags = TagsField()
+    tags = TagsField(max_length=500)
 
     links = cast(list["LinkDict"], models.JSONField(default=list))
 

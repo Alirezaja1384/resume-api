@@ -12,7 +12,7 @@ class Project(BaseModel):
     name = models.CharField(max_length=255)
     description = BleachField()
 
-    tags = TagsField()
+    tags = TagsField(max_length=500)
 
     links = cast(list["LinkDict"], models.JSONField(default=list))
 
