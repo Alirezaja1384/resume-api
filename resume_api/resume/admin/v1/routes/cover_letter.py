@@ -30,9 +30,3 @@ class CoverLetterViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-
-    def perform_destroy(self, instance: CoverLetter):
-        if instance.is_default:
-            raise PermissionDenied("Cannot delete default CoverLetter")
-
-        return super().perform_destroy(instance)
