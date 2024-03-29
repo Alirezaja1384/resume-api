@@ -45,7 +45,9 @@ class Profile(BaseModel):
         choices=EmploymentStatusChoices,
     )
 
-    skills: list["SkillDict"] = cast(list["SkillDict"], models.JSONField(default=list))
+    skills: list["SkillDict"] = cast(
+        list["SkillDict"], models.JSONField(default=list)
+    )
 
     interests: list["InterestDict"] = cast(
         list["InterestDict"], models.JSONField(default=list)
@@ -57,7 +59,9 @@ class Profile(BaseModel):
 
     projects = models.ManyToManyField(Project, related_name="profiles")
 
-    work_experiences = models.ManyToManyField(WorkExperience, related_name="profiles")
+    work_experiences = models.ManyToManyField(
+        WorkExperience, related_name="profiles"
+    )
 
     is_default = models.BooleanField(default=False)
 
@@ -81,7 +85,9 @@ class Profile(BaseModel):
     ) -> None:
         with transaction.atomic():
             if self.is_default:
-                self.__class__.objects.exclude(pk=self.pk).update(is_default=False)
+                self.__class__.objects.exclude(pk=self.pk).update(
+                    is_default=False
+                )
 
             super().save(force_insert, force_update, using, update_fields)
 
