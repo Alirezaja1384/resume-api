@@ -9,14 +9,22 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v3
-            - uses: actions/setup-node@v3
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Install node
+              uses: actions/setup-node@v3
               with:
                   node-version: "18"
-            - name: update-liara
+
+            - name: Install @liara/cli
+              run: npm i -g @liara/cli@5
+
+            - name: Generate requuirements.txt
+              run: bash ./generate-requirements.sh
+
+            - name: Deploy
               env:
                   LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
                   LIARA_APP_NAME: ${{ secrets.LIARA_APP_NAME }}
-              run: |
-                  npm i -g @liara/cli@5
-                  liara deploy --app="${LIARA_APP_NAME}" --path ./resume_api --api-token="$LIARA_TOKEN" --no-app-logs
+              run: liara deploy --app="${LIARA_APP_NAME}" --path ./resume_api --api-token="$LIARA_TOKEN" --no-app-logs

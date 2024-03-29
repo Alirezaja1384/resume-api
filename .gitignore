@@ -220,3 +220,6 @@ scripts/*.configs.json
 
 # collected static files
 staticfiles
+
+# Deployment files
+requirements.txt
