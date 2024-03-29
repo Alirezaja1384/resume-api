@@ -3,9 +3,7 @@
     "django": {
         "mirror": false,
         "timezone": "UTC",
-        "pythonVersion": "3.11",
-        "collectStatic": false,
-        "modifySettings": false
+        "pythonVersion": "3.11"
     },
     "build": {
         "location": "germany"
