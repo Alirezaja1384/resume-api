@@ -36,7 +36,7 @@ class EmploymentStatusChoices(models.TextChoices):
 class Profile(BaseModel):
     introduction = models.CharField(max_length=255, null=True)
 
-    about_me = BleachField()
+    about_me = BleachField(blank=True)
 
     job_title = models.CharField(max_length=255)
 
