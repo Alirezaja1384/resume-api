@@ -57,10 +57,14 @@ class Profile(BaseModel):
         UserModel, on_delete=models.CASCADE, related_name="Profiles"
     )
 
-    projects = models.ManyToManyField(Project, related_name="profiles")
+    projects = models.ManyToManyField(
+        Project, related_name="profiles", through="ProfileProject"
+    )
 
     work_experiences = models.ManyToManyField(
-        WorkExperience, related_name="profiles"
+        WorkExperience,
+        related_name="profiles",
+        through="ProfileWorkExperience",
     )
 
     is_default = models.BooleanField(default=False)
